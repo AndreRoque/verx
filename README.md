@@ -22,11 +22,24 @@ Sistema de controle de fluxo de caixa diário para comerciantes, composto por do
 ### Pré-requisitos
 - Docker 24+
 - Docker Compose v2
+- `make` (Linux/macOS: nativo; Windows: via [Chocolatey](https://chocolatey.org/) com `choco install make` ou WSL)
+
+### Comandos Make
+
+| Comando | Descrição |
+|---------|-----------|
+| `make up` | Builda as imagens e sobe toda a solução |
+| `make up-infra` | Sobe apenas a infra (Postgres, RabbitMQ, Redis, Keycloak) — útil para rodar as APIs localmente |
+| `make down` | Para todos os containers, mantendo os volumes |
+| `make down-clean` | Para e remove todos os volumes (dados apagados) |
+| `make build` | Compila a solution .NET em Release |
+| `make test` | Executa os testes |
+| `make logs` | Acompanha os logs em tempo real |
 
 ### Subir todos os serviços
 
 ```bash
-docker compose up -d
+make up
 ```
 
 O **Keycloak demora ~90 segundos** para inicializar e importar o realm — as APIs só sobem após ele estar pronto.
@@ -46,8 +59,8 @@ curl http://localhost:9080/health/ready
 ### Parar
 
 ```bash
-docker compose down        # mantém volumes
-docker compose down -v     # remove volumes também
+make down          # mantém volumes
+make down-clean    # remove volumes também
 ```
 
 ---
