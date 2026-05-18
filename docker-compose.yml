@@ -73,11 +73,11 @@ services:
     volumes:
       - ./keycloak:/opt/keycloak/data/import:ro
     healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:8080/health/ready || exit 1"]
-      interval: 30s
+      test: ["CMD-SHELL", "curl -sf http://localhost:9000/health/ready || exit 1"]
+      interval: 15s
       timeout: 10s
-      retries: 10
-      start_period: 90s
+      retries: 20
+      start_period: 120s
 
   transactions-api:
     build:
