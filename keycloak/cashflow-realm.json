@@ -51,19 +51,23 @@
   "users": [
     {
       "username": "cashflow-admin",
+      "email": "cashflow-admin@cashflow.local",
       "enabled": true,
       "emailVerified": true,
       "firstName": "CashFlow",
       "lastName": "Admin",
+      "requiredActions": [],
       "credentials": [{ "type": "password", "value": "admin123", "temporary": false }],
       "realmRoles": ["transactions:read", "transactions:write", "consolidation:read"]
     },
     {
       "username": "cashflow-reader",
+      "email": "cashflow-reader@cashflow.local",
       "enabled": true,
       "emailVerified": true,
       "firstName": "CashFlow",
       "lastName": "Reader",
+      "requiredActions": [],
       "credentials": [{ "type": "password", "value": "reader123", "temporary": false }],
       "realmRoles": ["transactions:read", "consolidation:read"]
     }
