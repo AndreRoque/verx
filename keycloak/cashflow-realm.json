@@ -1,0 +1,71 @@
+{
+  "realm": "cashflow",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": false,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": false,
+  "clients": [
+    {
+      "clientId": "cashflow-api",
+      "name": "CashFlow API",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "cashflow-api-secret",
+      "redirectUris": ["*"],
+      "webOrigins": ["*"],
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "protocolMappers": [
+        {
+          "name": "realm-roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "roles",
+            "jsonType.label": "String"
+          }
+        }
+      ]
+    }
+  ],
+  "roles": {
+    "realm": [
+      { "name": "transactions:read",  "description": "Leitura de lançamentos", "composite": false, "clientRole": false },
+      { "name": "transactions:write", "description": "Criação de lançamentos",  "composite": false, "clientRole": false },
+      { "name": "consolidation:read", "description": "Leitura de saldo diário", "composite": false, "clientRole": false }
+    ]
+  },
+  "users": [
+    {
+      "username": "cashflow-admin",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "CashFlow",
+      "lastName": "Admin",
+      "credentials": [{ "type": "password", "value": "admin123", "temporary": false }],
+      "realmRoles": ["transactions:read", "transactions:write", "consolidation:read"]
+    },
+    {
+      "username": "cashflow-reader",
+      "enabled": true,
+      "emailVerified": true,
+      "firstName": "CashFlow",
+      "lastName": "Reader",
+      "credentials": [{ "type": "password", "value": "reader123", "temporary": false }],
+      "realmRoles": ["transactions:read", "consolidation:read"]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/CashFlow.Consolidation/CashFlow.Consolidation.csproj" />
+    <Project Path="src/CashFlow.Shared/CashFlow.Shared.csproj" />
+    <Project Path="src/CashFlow.Transactions/CashFlow.Transactions.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/CashFlow.Consolidation.Tests/CashFlow.Consolidation.Tests.csproj" />
+    <Project Path="tests/CashFlow.Transactions.Tests/CashFlow.Transactions.Tests.csproj" />
+  </Folder>
+</Solution>
