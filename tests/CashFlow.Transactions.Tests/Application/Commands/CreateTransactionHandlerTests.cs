@@ -3,6 +3,7 @@ using CashFlow.Transactions.Application.Commands.CreateTransaction;
 using CashFlow.Transactions.Infrastructure.Data;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using FluentAssertions;
 
@@ -23,7 +24,7 @@ public class CreateTransactionHandlerTests
     {
         var db = CreateInMemoryContext();
         var publishEndpoint = new Mock<IPublishEndpoint>();
-        var handler = new CreateTransactionHandler(db, publishEndpoint.Object);
+        var handler = new CreateTransactionHandler(db, publishEndpoint.Object, NullLogger<CreateTransactionHandler>.Instance);
 
         var command = new CreateTransactionCommand(100.00m, "credit", "Test credit", null);
         var result = await handler.Handle(command, CancellationToken.None);
@@ -40,7 +41,7 @@ public class CreateTransactionHandlerTests
     {
         var db = CreateInMemoryContext();
         var publishEndpoint = new Mock<IPublishEndpoint>();
-        var handler = new CreateTransactionHandler(db, publishEndpoint.Object);
+        var handler = new CreateTransactionHandler(db, publishEndpoint.Object, NullLogger<CreateTransactionHandler>.Instance);
 
         var command = new CreateTransactionCommand(50.00m, "debit", "Test debit", null);
         var result = await handler.Handle(command, CancellationToken.None);
@@ -55,7 +56,7 @@ public class CreateTransactionHandlerTests
     {
         var db = CreateInMemoryContext();
         var publishEndpoint = new Mock<IPublishEndpoint>();
-        var handler = new CreateTransactionHandler(db, publishEndpoint.Object);
+        var handler = new CreateTransactionHandler(db, publishEndpoint.Object, NullLogger<CreateTransactionHandler>.Instance);
 
         var command = new CreateTransactionCommand(-10m, "credit", null, null);
         await Assert.ThrowsAsync<ArgumentException>(() => handler.Handle(command, CancellationToken.None));
@@ -66,7 +67,7 @@ public class CreateTransactionHandlerTests
     {
         var db = CreateInMemoryContext();
         var publishEndpoint = new Mock<IPublishEndpoint>();
-        var handler = new CreateTransactionHandler(db, publishEndpoint.Object);
+        var handler = new CreateTransactionHandler(db, publishEndpoint.Object, NullLogger<CreateTransactionHandler>.Instance);
 
         var command = new CreateTransactionCommand(100m, "invalid_type", null, null);
         await Assert.ThrowsAsync<ArgumentException>(() => handler.Handle(command, CancellationToken.None));

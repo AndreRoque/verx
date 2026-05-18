@@ -4,6 +4,7 @@ using CashFlow.Consolidation.Infrastructure.Data;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 
 namespace CashFlow.Consolidation.Tests.Application.Queries;
@@ -33,7 +34,7 @@ public class GetDailyBalanceHandlerTests
         db.DailyConsolidations.Add(consolidation);
         await db.SaveChangesAsync();
 
-        var handler = new GetDailyBalanceHandler(db, cache.Object);
+        var handler = new GetDailyBalanceHandler(db, cache.Object, NullLogger<GetDailyBalanceHandler>.Instance);
         var result = await handler.Handle(new GetDailyBalanceQuery(date), CancellationToken.None);
 
         result.Should().NotBeNull();
@@ -50,7 +51,7 @@ public class GetDailyBalanceHandlerTests
         cache.Setup(c => c.GetAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
              .ReturnsAsync((byte[]?)null);
 
-        var handler = new GetDailyBalanceHandler(db, cache.Object);
+        var handler = new GetDailyBalanceHandler(db, cache.Object, NullLogger<GetDailyBalanceHandler>.Instance);
         var result = await handler.Handle(new GetDailyBalanceQuery(DateOnly.FromDateTime(DateTime.UtcNow)), CancellationToken.None);
 
         result.Should().BeNull();
